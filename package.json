@@ -1,0 +1,29 @@
+{
+  "name": "electron-demo",
+  "version": "1.0.0",
+  "main": "main.js",
+  "license": "MIT",
+  "scripts": {
+    "pack": "webpack --config=webpack.config.js",
+    "go": "electron ."
+  },
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "css-loader": "^0.28.10",
+    "electron": "^1.7.12",
+    "node-sass": "^4.7.2",
+    "postcss-loader": "^2.0.10",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.20.1",
+    "url-loader": "^0.6.2",
+    "vue": "^2.5.13",
+    "vue-loader": "^14.0.3",
+    "vue-router": "^3.0.1",
+    "vue-style-loader": "^3.1.2",
+    "vue-template-compiler": "^2.5.13",
+    "webpack": "^3.10.0"
+  }
+}

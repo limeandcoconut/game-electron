@@ -12,8 +12,6 @@
 
 <script>
     const adventure = require('adventure')
-    console.log('run');
-    // const adventure = (a) => a
 
     export default {
         name: 'vue-g',

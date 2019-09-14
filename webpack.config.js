@@ -1,24 +1,25 @@
 const path = require('path')
-// const webpack = require('webpack')
 const isProduction = process.env.NODE_ENV === 'production'
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier')
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
+// const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const {VueLoaderPlugin} = require('vue-loader')
 
 let config = {
+    // Doesn't include node contexts
     // target: 'electron-main',
-    target: 'web',
-    // for dev
-    mode: 'development',
+    // Does
+    // Could consider switching to two configs
+    target: 'electron-renderer',
+    // target: 'web',
+    mode: isProduction ? 'production' : 'development',
     performance: {
         hints: false,
     },
-    // for prod
-    // ?
-
     entry: {
         // Change name to bundle
-        app: './client/client_main.js',
+        bundle: [
+            './client/client-main.js',
+        ],
     },
     output: {
         path: path.join(__dirname, 'dist'),
@@ -27,24 +28,17 @@ let config = {
         // chunkFilename: '[id].chunk.js',
     },
     module: {
-        // noParse: /es6-promise\.js$/,
+        noParse: /es6-promise\.js$/,
         rules: [
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: require.resolve('babel-loader'),
-                // options: {
-                    // rootMode: "upward",
-                    // configFile: path.resolve('/Users/jasmith/Sites/perpar/game-electron', "babel.config.js"),
-
-                    // },
-                    exclude: /node_modules/,
-                    options: {
-                        cacheDirectory: true,
-                        cacheCompression: isProduction,
-                        compact: isProduction,
-                        // Pick up our root babel.config.js
-                // rootMode: 'upward',
+                exclude: /node_modules/,
+                options: {
+                    cacheDirectory: true,
+                    cacheCompression: isProduction,
+                    compact: isProduction,
                 presets: [
                     [
                     '@babel/preset-env',
@@ -60,12 +54,6 @@ let config = {
             {
                 test: /\.vue$/,
                 loader: require.resolve('vue-loader'),
-                // options: {
-                //     loaders: {
-                //         js: 'babel-loader',
-                //         // scss: 'vue-style-loader!css-loader!sass-loader',
-                //     },
-                // },
             },
             {
                 test: /\.less$/,
@@ -74,7 +62,6 @@ let config = {
                     {
                         loader: 'css-loader',
                         options: {
-                            // minimize: isProduction,
                             sourceMap: !isProduction,
                         },
                     },
@@ -97,6 +84,7 @@ let config = {
             title: 'Webpack Build',
             suppressSuccess: true,
         }),
+        // TODO: Enforce
         // new CaseSensitivePathsPlugin(),
     ],
     resolve: {

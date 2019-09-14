@@ -13,10 +13,12 @@
 <script>
     const adventure = require('adventure')
     console.log('run');
+    // const adventure = (a) => a
 
     export default {
         name: 'vue-g',
         data() {
+            console.log('data')
             return {
                 name: this.name,
                 input: '',
@@ -125,7 +127,7 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="less">
     * {
         box-sizing: border-box;
         margin: 0;

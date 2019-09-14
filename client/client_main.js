@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import router from './routes.js'
+// import '@babel/polyfill'
 // import mixins from './mixins.js'
 // import store from './vuex/store.js'
 // import './styles/_main.scss'
@@ -13,6 +14,7 @@ import router from './routes.js'
 // Vue.prototype.$stripe = window.Stripe('pk_test_RDASsCW1w5o2Qd3qHRRkwV2f')
 
 import App from './app.vue'
+
 
 new Vue({
     router,

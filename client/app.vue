@@ -40,22 +40,29 @@
                     this.input += key
                 }
             },
+
+            sizeLines() {
+                this.maxChars = Math.floor(window.innerWidth / this.charWidth) - 2
+                this.maxLines = Math.floor(window.innerHeight / this.charHeight) - 2
+                console.log(this.maxLines)
+                // FIXIT: TODO: change back when we're done with json output
+                // let linesRegex = new RegExp(`.{1,${maxChars}}(\\b|$)|\\S+?(\\b|$)`, 'g')
+                this.linesRegex = new RegExp(`.{1,${this.maxChars}}(\\s|$)|\\S+?(\\s|$)`, 'g')
+            },
         },
         created() {
             let textColor = this.cursorColor
-            this.charHeight = 36
-            this.charWidth = 18
-            this.maxChars = Math.floor(window.innerWidth / this.charWidth) - 2
-            let maxChars = this.maxChars
-            this.maxLines = Math.floor(window.innerHeight / this.charHeight) - 2
-            // FIXIT: TODO: change back when we're done with json output
-            // let linesRegex = new RegExp(`.{1,${maxChars}}(\\b|$)|\\S+?(\\b|$)`, 'g')
-            let linesRegex = new RegExp(`.{1,${maxChars}}(\\s|$)|\\S+?(\\s|$)`, 'g')
+            // this.charHeight = 36
+            this.charHeight = 24
+            // this.charWidth = 18
+            this.charWidth = 12
+            this.sizeLines()
+            window.onresize = this.sizeLines
             let newline = '\n'
 
-            function wrap(response) {
+            const wrap = (response) => {
                 // console.time('wrap')
-                response = response.match(linesRegex) || []
+                response = response.match(this.linesRegex) || []
                 response = response.map(function(line) {
                     if (line.slice(-1) === newline) {
                         line = line.slice(0, line.length - 1)
@@ -88,6 +95,12 @@
             this.specialKeys = {
                 Enter: () => {
                     let output = `${this.output}${newline}>${this.input}`
+                    // console.timeEnd('key')
+                    // console.time('call')
+                    let response = adventure(this.input).toString()
+                    response = wrap(response)
+                    output += response + newline
+
                     // console.time('trim')
                     let split = output.split(newline)
                     let lineDiff = split.length - this.maxLines
@@ -96,11 +109,6 @@
                     }
                     // console.timeEnd('trim')
                     this.output = output + newline
-                    // console.timeEnd('key')
-                    // console.time('call')
-                    let response = adventure(this.input).toString()
-                    response = wrap(response)
-                    this.output += response + newline
                     this.input = ''
                 },
                 Backspace: () => {
@@ -134,7 +142,7 @@
 
     body,
     pre {
-        font-family: 'Px437 IBM VGA8';
+        font-family: 'Px437 IBM VGA8', 'consolas', monospace;
         margin: 0;
     }
 
@@ -144,7 +152,8 @@
         background: #000000;
         width: 100vw;
         height: 100vh;
-        font-size: 36px;
+        // font-size: 36px;
+        font-size: 20px;
         display: flex;
         flex-direction: column;
     }
@@ -167,6 +176,7 @@
         position: absolute;
         top: 0;
         height: 36px;
+        height: 20px;
         width: 100%;
         color: transparent;
     }

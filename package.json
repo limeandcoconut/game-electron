@@ -24,7 +24,7 @@
     "babel-loader": "^8.0.6",
     "case-sensitive-paths-webpack-plugin": "^2.2.0",
     "css-loader": "^3.2.0",
-    "electron": "^6.0.9",
+    "electron": "^11.5.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
     "node-sass": "^4.12.0",

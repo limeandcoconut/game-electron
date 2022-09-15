@@ -108,7 +108,7 @@
                         output = split.slice(lineDiff).join(newline)
                     }
                     // console.timeEnd('trim')
-                    this.output = output + newline
+                    this.output = output
                     this.input = ''
                 },
                 Backspace: () => {
